@@ -12,7 +12,7 @@ define([
   "peaks/views/zooms/animated",
   "peaks/views/zooms/static",
   "konva"
-  ], function (WaveformAxis, mixins, AnimatedZoomAdapter, StaticZoomAdapter, Konva) {
+], function (WaveformAxis, mixins, AnimatedZoomAdapter, StaticZoomAdapter, Konva) {
   'use strict';
 
   function WaveformZoomView(waveformData, container, peaks) {
@@ -58,7 +58,10 @@ define([
     that.zoomWaveformLayer.add(that.background);
 
     if (that.peaks.options.axisOnWaveforms.indexOf('zoomview') > -1) {
-      that.axis = new WaveformAxis(that, { axisGridlineColor: that.peaks.options.axisGridlineColor, axisLabelColor: that.peaks.options.axisLabelColor });
+      that.axis = new WaveformAxis(that, {
+        axisGridlineColor: that.peaks.options.axisGridlineColor,
+        axisLabelColor: that.peaks.options.axisLabelColor
+      });
     }
 
     that.createZoomWaveform();
@@ -67,9 +70,7 @@ define([
     // INTERACTION ===============================================
 
     that.stage.on("mousedown", function (event) {
-      if (event.target &&
-        !event.target.attrs.draggable &&
-        !event.target.parent.attrs.draggable) {
+      if (event.target && !event.target.attrs.draggable && !event.target.parent.attrs.draggable) {
         if (event.type === "mousedown") {
           var x = event.evt.layerX, dX, p, startPosition, startTime, dragId;
 
@@ -84,29 +85,18 @@ define([
             var drag_event = peaks.seeking ? 'user_drag.zoomview.start' : 'user_drag.zoomview.dragging';
             peaks.seeking = false;
 
-            dX = event.evt.layerX > x ? x - event.evt.layerX : (x - event.evt.layerX)*1;
+            dX = event.evt.layerX > x ? x - event.evt.layerX : (x - event.evt.layerX) * 1;
             x = event.evt.layerX;
-            p = that.frameOffset+dX;
+            p = that.frameOffset + dX;
             p = p < 0 ? 0 : p > (that.pixelLength - that.width) ? (that.pixelLength - that.width) : p;
 
-            currentPosition = Math.min(that.frameOffset + x, that.pixelLength);
-            stopTime = that.data.time(currentPosition);
-            that.peaks.emit(drag_event, startPosition, currentPosition, startTime, stopTime, dragId);
-
-            if (that.peaks.options.moveZoomWaveOnDrag) {
-              that.updateZoomWaveform(p);
-            }
+            that.updateZoomWaveform(p);
           });
 
-          that.stage.on("mouseup", function (event) {
+          that.stage.on("mouseup", function () {
             if (peaks.seeking) {
               // Set playhead position only on click release, when not dragging
-              that.peaks.emit("user_seek.zoomview", startTime, startPosition);
-            } else {
-              var currentPosition = Math.min(that.frameOffset + event.evt.layerX, that.pixelLength),
-                  stopTime = that.data.time(currentPosition);
-
-              that.peaks.emit('user_drag.zoomview.end', startPosition, currentPosition, startTime, stopTime, dragId);
+              that.peaks.emit("user_seek.zoomview", that.data.time(that.frameOffset + x), that.frameOffset + x);
             }
 
             that.stage.off("mousemove mouseup");
@@ -118,13 +108,13 @@ define([
 
     // EVENTS ====================================================
 
-    var userSeekHandler = function userSeekHandler (options, time) {
-      options = options || { withOffset: true };
+    var userSeekHandler = function userSeekHandler(options, time) {
+      options = options || {withOffset: true};
       var frameIndex = that.data.at_time(time);
 
       that.seekFrame(frameIndex, options.withOffset ? Math.round(that.width / 2) : 0);
 
-      if (that.playing){
+      if (that.playing) {
         that.playFrom(time, frameIndex);
       }
     };
@@ -135,9 +125,9 @@ define([
       }
     });
 
-    that.peaks.on("player_seek", userSeekHandler.bind(null, { withOffset: true }));
-    that.peaks.on("user_seek.*", userSeekHandler.bind(null, { withOffset: true }));
-    that.peaks.on("user_scrub.*", userSeekHandler.bind(null, { withOffset: false }));
+    that.peaks.on("player_seek", userSeekHandler.bind(null, {withOffset: true}));
+    that.peaks.on("user_seek.*", userSeekHandler.bind(null, {withOffset: true}));
+    that.peaks.on("user_scrub.*", userSeekHandler.bind(null, {withOffset: false}));
 
     that.peaks.on("player_play", function (time) {
       that.playing = true;
@@ -189,7 +179,7 @@ define([
     });
 
     // KEYBOARD EVENTS =========================================
-    var nudgeFrame = function nudgeFrame(step){
+    var nudgeFrame = function nudgeFrame(step) {
       var time = that.options.mediaElement.currentTime;
 
       time += (that.options.nudgeIncrement * step);
@@ -204,7 +194,7 @@ define([
 
   // WAVEFORM ZOOMVIEW FUNCTIONS =========================================
 
-  WaveformZoomView.prototype.createZoomWaveform = function() {
+  WaveformZoomView.prototype.createZoomWaveform = function () {
     var that = this;
     that.zoomWaveformShape = new Konva.Shape({
       fill: that.options.zoomWaveformColor,
@@ -218,7 +208,7 @@ define([
     that.peaks.emit("waveform_zoom_displaying", 0 * that.data.seconds_per_pixel, that.width * that.data.seconds_per_pixel);
   };
 
-  WaveformZoomView.prototype.createUi = function() {
+  WaveformZoomView.prototype.createUi = function () {
     var that = this;
 
     that.zoomPlayheadLine = new Konva.Line({
@@ -228,7 +218,7 @@ define([
     });
 
     that.zoomPlayheadText = new Konva.Text({
-      x:2,
+      x: 2,
       y: 12,
       text: "00:00:00",
       fontSize: 11,
@@ -290,7 +280,7 @@ define([
 
     // if (that.snipWaveformShape) that.updateSnipWaveform(that.currentSnipStartTime, that.currentSnipEndTime);
 
-    that.peaks.emit("waveform_zoom_displaying", pixelOffset * that.data.seconds_per_pixel, (pixelOffset+that.width) * that.data.seconds_per_pixel);
+    that.peaks.emit("waveform_zoom_displaying", pixelOffset * that.data.seconds_per_pixel, (pixelOffset + that.width) * that.data.seconds_per_pixel);
   };
 
   // UI functions ==============================
@@ -315,7 +305,7 @@ define([
       var time = frame.time;
 
       var seconds = time / 1000;
-      var positionInFrame = Math.round(startPosition - that.frameOffset + (pixelsPerSecond * (seconds-frameSeconds)));
+      var positionInFrame = Math.round(startPosition - that.frameOffset + (pixelsPerSecond * (seconds - frameSeconds)));
 
       that.syncPlayhead(that.frameOffset + positionInFrame);
     }, that.uiLayer);
@@ -328,7 +318,7 @@ define([
 
     var nextOffset = frameOffset + this.width;
 
-    if (nextOffset < this.data.adapter.length){
+    if (nextOffset < this.data.adapter.length) {
       this.frameOffset = nextOffset;
       this.updateZoomWaveform(nextOffset);
 
