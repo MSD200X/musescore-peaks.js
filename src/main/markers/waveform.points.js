@@ -98,6 +98,7 @@ define([
       if (thisPoint.marker.getX() > 0) {
         var inOffset = thisPoint.view.frameOffset + thisPoint.marker.getX() + thisPoint.marker.getWidth();
         point.timestamp = thisPoint.view.data.time(inOffset);
+        peaks.emit("point.drag", point);
       }
 
       updatePoint(point);
