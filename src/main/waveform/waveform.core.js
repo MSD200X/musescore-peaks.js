@@ -7,11 +7,10 @@
  */
 define([
   "waveform-data",
-  "peaks/views/waveform.overview",
   "peaks/views/waveform.zoomview",
   "peaks/markers/waveform.segments",
   "peaks/markers/waveform.points"
-  ], function (WaveformData, WaveformOverview, WaveformZoomView, WaveformSegments, WaveformPoints) {
+  ], function (WaveformData, WaveformZoomView, WaveformSegments, WaveformPoints) {
 
   'use strict';
 
@@ -51,7 +50,6 @@ define([
               if (window[connector]){
                 requestType = connector.toLowerCase();
                 uri = options.dataUri[requestType];
-
                 return Boolean(uri);
               }
             });
@@ -115,15 +113,11 @@ define([
 
         try {
           this.origWaveformData = remoteData instanceof WaveformData ? remoteData : WaveformData.create(remoteData);
-          var overviewWaveformData = this.origWaveformData.resample(this.ui.player.clientWidth);
-          this.waveformOverview = new WaveformOverview(overviewWaveformData, this.ui.overview, peaks);
         }
         catch (e) {
           return peaks.emit('error', e);
         }
-
-
-        peaks.emit("waveformOverviewReady", this.waveformOverview);
+        peaks.emit("waveformOverviewReady");
         this.bindResize();
       },
 
@@ -148,20 +142,13 @@ define([
         var that = this;
 
         window.addEventListener("resize", function () {
-          that.ui.overview.hidden = true;
           that.ui.zoom.hidden = true;
 
           if (that.resizeTimeoutId) clearTimeout(that.resizeTimeoutId);
           that.resizeTimeoutId = setTimeout(function(){
             var w = that.ui.player.clientWidth;
-            var overviewWaveformData = that.origWaveformData.resample(w);
-            peaks.emit("resizeEndOverview", w, overviewWaveformData);
             peaks.emit("window_resized", w, that.origWaveformData);
           }, 500);
-        });
-
-        peaks.on("overview_resized", function () {
-          that.ui.overview.removeAttribute('hidden');
         });
 
         peaks.on("zoomview_resized", function () {

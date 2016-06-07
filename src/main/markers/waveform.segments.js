@@ -15,7 +15,7 @@ define([
     var self = this;
 
     self.segments = [];
-    self.views = [peaks.waveform.waveformZoomView, peaks.waveform.waveformOverview].map(function(view){
+    self.views = [peaks.waveform.waveformZoomView].map(function(view){
       if (!view.segmentLayer) {
         view.segmentLayer = new Konva.Layer();
         view.stage.add(view.segmentLayer);
@@ -27,9 +27,7 @@ define([
 
     var createSegmentWaveform = function (segment) {
       var segmentZoomGroup = new Konva.Group();
-      var segmentOverviewGroup = new Konva.Group();
-
-      var segmentGroups = [{ group: segmentZoomGroup, view: 'zoomview' }, { group: segmentOverviewGroup, view: 'overview' }];
+      var segmentGroups = [{ group: segmentZoomGroup, view: 'zoomview' }];
 
       var menter = function (event) {
         if (this.parent && this.parent.label) {
@@ -83,39 +81,12 @@ define([
 
       segment.zoom = segmentZoomGroup;
       segment.zoom.view = peaks.waveform.waveformZoomView;
-      segment.overview = segmentOverviewGroup;
-      segment.overview.view = peaks.waveform.waveformOverview;
-
       return segment;
     };
 
     var updateSegmentWaveform = function (segment) {
       // Binding with data
-      peaks.waveform.waveformOverview.data.set_segment(peaks.waveform.waveformOverview.data.at_time(segment.startTime), peaks.waveform.waveformOverview.data.at_time(segment.endTime), segment.id);
       peaks.waveform.waveformZoomView.data.set_segment(peaks.waveform.waveformZoomView.data.at_time(segment.startTime), peaks.waveform.waveformZoomView.data.at_time(segment.endTime), segment.id);
-
-      // Overview
-      var overviewStartOffset = peaks.waveform.waveformOverview.data.at_time(segment.startTime);
-      var overviewEndOffset = peaks.waveform.waveformOverview.data.at_time(segment.endTime);
-
-      segment.overview.setWidth(overviewEndOffset - overviewStartOffset);
-
-      if (segment.overview.inMarker) {
-        segment.overview.inMarker.show().setX(overviewStartOffset - segment.overview.inMarker.getWidth());
-        // Change Text
-        segment.overview.inMarker.label.setText(mixins.niceTime(segment.startTime, false));
-      }
-
-      if (segment.overview.outMarker) {
-        segment.overview.outMarker.show().setX(overviewEndOffset);
-        // Change Text
-        segment.overview.outMarker.label.setText(mixins.niceTime(segment.endTime, false));
-      }
-
-      // Label
-      // segment.overview.label.setX(overviewStartOffset);
-
-      SegmentShape.update.call(segment.overview.waveformShape, peaks.waveform.waveformOverview, segment.id);
 
       // Zoom
       var zoomStartOffset = peaks.waveform.waveformZoomView.data.at_time(segment.startTime);
@@ -268,8 +239,6 @@ define([
 
       if (typeof index === 'number'){
         segment = this.segments[index];
-
-        segment.overview.destroy();
         segment.zoom.destroy();
       }
 

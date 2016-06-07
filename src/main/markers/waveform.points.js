@@ -15,7 +15,7 @@ define([
 
     self.points = [];
 
-    self.views = [waveformView.waveformZoomView, waveformView.waveformOverview].map(function(view){
+    self.views = [waveformView.waveformZoomView].map(function(view){
       if (!view.pointLayer) {
         view.pointLayer = new Konva.Layer();
         view.stage.add(view.pointLayer);
@@ -27,8 +27,7 @@ define([
 
     function constructPoint(point) {
       var pointZoomGroup = new Konva.Group();
-      var pointOverviewGroup = new Konva.Group();
-      var pointGroups = [ { group: pointZoomGroup, view: 'zoomview' }, { group: pointOverviewGroup, view: 'overview' }];
+      var pointGroups = [ { group: pointZoomGroup, view: 'zoomview' }];
 
       point.editable = Boolean(point.editable);
 
@@ -50,25 +49,13 @@ define([
 
       point.zoom = pointZoomGroup;
       point.zoom.view = waveformView.waveformZoomView;
-      point.overview = pointOverviewGroup;
-      point.overview.view = waveformView.waveformOverview;
 
       return point;
     }
 
     function updatePoint(point) {
       // Binding with data
-      waveformView.waveformOverview.data.set_point(waveformView.waveformOverview.data.at_time(point.timestamp), point.id);
       waveformView.waveformZoomView.data.set_point(waveformView.waveformZoomView.data.at_time(point.timestamp), point.id);
-
-      // Overview
-      var overviewtimestampOffset = waveformView.waveformOverview.data.at_time(point.timestamp);
-
-      if (point.overview.marker) {
-        point.overview.marker.show().setX(overviewtimestampOffset - point.overview.marker.getWidth());
-        // Change Text
-        point.overview.marker.label.setText(mixins.niceTime(point.timestamp, false));
-      }
 
       // Zoom
       var zoomtimestampOffset = waveformView.waveformZoomView.data.at_time(point.timestamp);
@@ -139,7 +126,6 @@ define([
       });
 
       if (typeof index === 'number'){
-        point.overview.destroy();
         point.zoom.destroy();
       }
 

@@ -77,7 +77,7 @@ define(["peaks/waveform/waveform.mixins", "konva"], function (mixins, Konva) {
 
 
   /**
-   * @param {WaveformOverview|WaveformZoomview} view
+   * @param {WaveformZoomview} view
    * @param {Object} [viewOptions] configuration options
    * @param {String} [viewOptions.axisGridlineColor] color code to use for the grid lines
    * @param {String} [viewOptions.axisLabelColor] color code to use for labels

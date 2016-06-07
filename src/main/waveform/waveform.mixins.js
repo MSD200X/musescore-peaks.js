@@ -314,10 +314,6 @@ define(['konva'], function (Konva) {
       context.fillStrokeShape(this);
     },
 
-    waveformOverviewMarkerDrawFunction: function(xIndex, viewGroup, view) {
-      viewGroup.waveformShape.setPoints([xIndex, 0, xIndex, view.height]);
-    },
-
     /**
      * Format a time nicely
      * @param  {int}      time            Time in seconds to be formatted
