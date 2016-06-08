@@ -155,7 +155,7 @@ define(['konva'], function (Konva) {
          * @param  {Function} onDragEnd  Callback after drag completed
          * @return {Konva Object}        Konva group object of handle marker elements
          */
-        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd, labelText) {
+        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd, labelText, color) {
             var handleHeight = 30;
             var handleTop = (height / 2);
             var handleWidth = 30;
@@ -170,7 +170,6 @@ define(['konva'], function (Konva) {
             var group = new Konva.Group({
                 draggable: draggable,
                 dragBoundFunc: function (pos) {
-
                     return {
                         x: pos.x, //No constraint hoziontally
                         y: this.getAbsolutePosition().y //Constrained vertical line

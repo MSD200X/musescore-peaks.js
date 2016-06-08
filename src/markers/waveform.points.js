@@ -34,7 +34,7 @@ define([
                 var view = self.views[i];
                 var pointGroup = item.group;
                 if (point.editable) {
-                    pointGroup.marker = new peaks.options.pointMarker(true, pointGroup, point, pointHandleDrag, peaks.options.pointDblClickHandler, peaks.options.pointDragEndHandler, point.labelText);
+                    pointGroup.marker = new peaks.options.pointMarker(true, pointGroup, point, pointHandleDrag, peaks.options.pointDblClickHandler, peaks.options.pointDragEndHandler, point.labelText, point.color);
                     pointGroup.add(pointGroup.marker);
 
                 } else if (peaks.options.showMarkerLinesWhenUneditable.indexOf(item.view) > -1) {
