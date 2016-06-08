@@ -15,20 +15,20 @@
   },
   "browser": {
     "EventEmitter": "eventemitter2",
-    "peaks/player/player": "./src/main/player/player.js",
-    "peaks/player/player.keyboard": "./src/main/player/player.keyboard.js",
-    "peaks/waveform/waveform.axis": "./src/main/waveform/waveform.axis.js",
-    "peaks/waveform/waveform.core": "./src/main/waveform/waveform.core.js",
-    "peaks/waveform/waveform.mixins": "./src/main/waveform/waveform.mixins.js",
-    "peaks/views/waveform.overview": "./src/main/views/waveform.overview.js",
-    "peaks/views/waveform.zoomview": "./src/main/views/waveform.zoomview.js",
-    "peaks/views/zooms/animated": "./src/main/views/zooms/animated.js",
-    "peaks/views/zooms/static": "./src/main/views/zooms/static.js",
-    "peaks/markers/waveform.points": "./src/main/markers/waveform.points.js",
-    "peaks/markers/waveform.segments": "./src/main/markers/waveform.segments.js",
-    "peaks/markers/shapes/base": "./src/main/markers/shapes/base.js",
-    "peaks/markers/shapes/rect": "./src/main/markers/shapes/rect.js",
-    "peaks/markers/shapes/wave": "./src/main/markers/shapes/wave.js"
+    "peaks/markers/shapes/base": "./src/markers/shapes/base.js",
+    "peaks/markers/shapes/rect": "./src/markers/shapes/rect.js",
+    "peaks/markers/shapes/wave": "./src/markers/shapes/wave.js",
+    "peaks/markers/waveform.points": "./src/markers/waveform.points.js",
+    "peaks/markers/waveform.segments": "./src/markers/waveform.segments.js",
+    "peaks/player/player": "./src/player/player.js",
+    "peaks/player/player.keyboard": "./src/player/player.keyboard.js",
+    "peaks/views/waveform.overview": "./src/views/waveform.overview.js",
+    "peaks/views/waveform.zoomview": "./src/views/waveform.zoomview.js",
+    "peaks/views/zooms/animated": "./src/views/zooms/animated.js",
+    "peaks/views/zooms/static": "./src/views/zooms/static.js",
+    "peaks/waveform/waveform.axis": "./src/waveform/waveform.axis.js",
+    "peaks/waveform/waveform.core": "./src/waveform/waveform.core.js",
+    "peaks/waveform/waveform.mixins": "./src/waveform/waveform.mixins.js"
   },
   "repository": {
     "type": "git",
@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "eventemitter2": "^0.4.14",
+    "keypress.js": "^2.1.0-1",
     "konva": "~0.9.5",
     "waveform-data": "^1.5.1"
   },

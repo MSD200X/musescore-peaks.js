@@ -265,6 +265,7 @@ define('peaks', [
       segmentInMarker:  mixins.defaultInMarker(instance.options),
       segmentOutMarker: mixins.defaultOutMarker(instance.options),
       segmentLabelDraw: mixins.defaultSegmentLabelDraw(instance.options),
+      pointLabelDraw: mixins.defaultSegmentLabelDraw(instance.options),
       pointMarker:      mixins.defaultPointMarker(instance.options)
     });
 

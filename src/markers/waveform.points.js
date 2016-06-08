@@ -30,11 +30,10 @@ define([
       var pointGroups = [ { group: pointZoomGroup, view: 'zoomview' }];
 
       point.editable = Boolean(point.editable);
-
       pointGroups.forEach(function(item, i){
         var view = self.views[i];
         var pointGroup = item.group;
-
+        pointGroup.label = new peaks.options.pointLabelDraw(pointGroup, point);
         if (point.editable) {
           pointGroup.marker = new peaks.options.pointMarker(true, pointGroup, point, pointHandleDrag, peaks.options.pointDblClickHandler, peaks.options.pointDragEndHandler);
           pointGroup.add(pointGroup.marker);
