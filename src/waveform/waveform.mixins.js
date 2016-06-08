@@ -155,11 +155,12 @@ define(['konva'], function (Konva) {
          * @param  {Function} onDragEnd  Callback after drag completed
          * @return {Konva Object}        Konva group object of handle marker elements
          */
-        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd) {
-            var handleTop = (height / 2) - 10.5;
-            var handleWidth = 10;
-            var handleHeight = 20;
-            var handleX = 0.5; //Place in the middle of the marker
+        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd, labelText) {
+            var handleHeight = 30;
+            var handleTop = (height / 2);
+            var handleWidth = 30;
+            var handleX = -10; //Place in the middle of the marker
+
 
             // If no color is provided for the marker, fall back to the point's color
             if (color === undefined) {
@@ -202,24 +203,37 @@ define(['konva'], function (Konva) {
 
             var text = new Konva.Text({
                 x: xPosition,
-                y: (height / 2) - 5,
+                y: (height / 2) - handleHeight/2,
                 text: "",
                 fontSize: 10,
                 fontFamily: 'sans-serif',
                 fill: "#000",
-                textAlign: "center"
+                align: "center"
             });
+            if(labelText) {
+                var label = new Konva.Text({
+                    x: -handleWidth / 2,
+                    y: (height / 2) - 5,
+                    text: labelText,
+                    fontSize: 13,
+                    width: handleWidth,
+                    fontFamily: 'sans-serif',
+                    fontStyle: 'bold',
+                    fill: "#fff",
+                    align: "center"
+                });
+            }
             text.hide();
             group.label = text;
 
             /*
              Handle
              */
-            var handle = new Konva.Rect({
+            var handle = new Konva.Circle({
                 width: handleWidth,
                 height: handleHeight,
                 fill: color,
-                x: handleX,
+                x: 0,
                 y: handleTop
             });
 
@@ -230,14 +244,26 @@ define(['konva'], function (Konva) {
                 points: [0, 0, 0, height],
                 stroke: color,
                 strokeWidth: parent.strokeWidth || 1,
-                x: handleX,
+                x: 0,
                 y: 0
             });
 
             /*
              Events
              */
+            if(labelText){
+                label.on("mouseover", function (event) {
+                    text.show();
+                    text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
+                    point.view.pointLayer.draw();
+                });
+                label.on("mouseout", function (event) {
+                    text.hide();
+                    point.view.pointLayer.draw();
+                });
+            }
             if (draggable) {
+
                 handle.on("mouseover", function (event) {
                     text.show();
                     text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
@@ -252,6 +278,9 @@ define(['konva'], function (Konva) {
             }
             group.add(line);
             group.add(text);
+            if(labelText) {
+                group.add(label);
+            }
 
             return group;
 
