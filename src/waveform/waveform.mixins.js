@@ -253,11 +253,13 @@ define(['konva'], function (Konva) {
              */
             if(labelText){
                 label.on("mouseover", function (event) {
+                    document.body.style.cursor = "pointer";
                     text.show();
                     text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
                     point.view.pointLayer.draw();
                 });
                 label.on("mouseout", function (event) {
+                    document.body.style.cursor = "default";
                     text.hide();
                     point.view.pointLayer.draw();
                 });
@@ -265,15 +267,16 @@ define(['konva'], function (Konva) {
             if (draggable) {
 
                 handle.on("mouseover", function (event) {
+                    document.body.style.cursor = "pointer";
                     text.show();
                     text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
                     point.view.pointLayer.draw();
                 });
                 handle.on("mouseout", function (event) {
+                    document.body.style.cursor = "default";
                     text.hide();
                     point.view.pointLayer.draw();
                 });
-
                 group.add(handle);
             }
             group.add(line);
