@@ -47,32 +47,35 @@
     "start": "serve --cors -p 9000"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "github-changes": "^1.0.0",
-    "jshint": "^2.5.1",
-    "karma": "^0.12.0",
-    "karma-browserstack-launcher": "^0.1.1",
-    "karma-chrome-launcher": "^0.1.0",
-    "karma-firefox-launcher": "^0.1.0",
-    "karma-html2js-preprocessor": "^0.1",
-    "karma-ievms": "^0.0.4",
-    "karma-mocha": "^0.1.7",
-    "karma-requirejs": "^0.2.2",
-    "karma-safari-launcher": "^0.1.1",
-    "karma-sinon-chai": "^0.2.0",
-    "minifyify": "^4.2.0",
-    "mocha": "^1.17.1",
-    "requirejs": "^2.1.15",
-    "serve": "^1.4.0"
+    "chai": "^3.5.0",
+    "github-changes": "^1.0.2",
+    "jshint": "^2.9.2",
+    "karma": "^0.13.22",
+    "karma-browserstack-launcher": "^1.0.1",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-html2js-preprocessor": "^1.0",
+    "karma-ievms": "^0.1.0",
+    "karma-mocha": "^1.0.1",
+    "karma-requirejs": "^1.0.0",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-sinon-chai": "^1.2.0",
+    "minifyify": "^7.3.3",
+    "mocha": "^2.5.3",
+    "requirejs": "^2.2.0",
+    "serve": "^1.4.0",
+    "lolex": "^1.5.0",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
-    "eventemitter2": "^0.4.14",
+    "eventemitter2": "^1.0.3",
     "keypress.js": "^2.1.0-1",
-    "konva": "~0.9.5",
+    "konva": "~0.13.0",
     "waveform-data": "^1.5.1"
   },
   "optionalDependencies": {
-    "browserify": "^5.12.0",
-    "deamdify": "^0.1.1"
+    "browserify": "^13.0.1",
+    "deamdify": "^0.2.0"
   }
 }
