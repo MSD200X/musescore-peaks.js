@@ -185,7 +185,12 @@ define([
       time += (that.options.nudgeIncrement * step);
       that.seekFrame(that.data.at_time(time));
     };
-
+    that.peaks.on("waveform_zoom_pan_left", function(){
+      that.updateZoomWaveform(that.frameOffset - that.width/2);
+    });
+    that.peaks.on("waveform_zoom_pan_right", function(){
+      that.updateZoomWaveform(that.frameOffset + that.width/2);
+    });
     that.peaks.on("kybrd_left", nudgeFrame.bind(that, -1));
     that.peaks.on("kybrd_right", nudgeFrame.bind(that, 1));
     that.peaks.on("kybrd_shift_left", nudgeFrame.bind(that, -10));
@@ -249,9 +254,8 @@ define([
     if (that.pixelLength < that.width) {
       pixelOffset = 0;
     }
-
     // new position is beyond the size of the waveform, so set it to the very last possible position
-    if (pixelOffset > that.pixelLength) {
+    if (pixelOffset + that.width > that.pixelLength) {
       pixelOffset = that.pixelLength - that.width;
     }
 

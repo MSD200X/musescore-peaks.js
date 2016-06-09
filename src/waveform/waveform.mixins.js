@@ -250,28 +250,15 @@ define(['konva'], function (Konva) {
             /*
              Events
              */
-            if(labelText){
-                label.on("mouseover", function (event) {
-                    document.body.style.cursor = "pointer";
-                    text.show();
-                    text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
-                    point.view.pointLayer.draw();
-                });
-                label.on("mouseout", function (event) {
-                    document.body.style.cursor = "default";
-                    text.hide();
-                    point.view.pointLayer.draw();
-                });
-            }
             if (draggable) {
 
-                handle.on("mouseover", function (event) {
+                group.on("mouseover", function (event) {
                     document.body.style.cursor = "pointer";
                     text.show();
                     text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
                     point.view.pointLayer.draw();
                 });
-                handle.on("mouseout", function (event) {
+                group.on("mouseout", function (event) {
                     document.body.style.cursor = "default";
                     text.hide();
                     point.view.pointLayer.draw();
