@@ -285,6 +285,7 @@ define([
     // if (that.snipWaveformShape) that.updateSnipWaveform(that.currentSnipStartTime, that.currentSnipEndTime);
 
     that.peaks.emit("waveform_zoom_displaying", pixelOffset * that.data.seconds_per_pixel, (pixelOffset + that.width) * that.data.seconds_per_pixel);
+    that.peaks.emit("waveform_zoom_update", pixelOffset, that.pixelLength - that.width);
   };
 
   // UI functions ==============================
