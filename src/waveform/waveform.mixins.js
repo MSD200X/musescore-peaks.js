@@ -198,18 +198,20 @@ define(['konva'], function (Konva) {
             }
 
             //Place text to the left of the mark
-            var xPosition = -handleWidth;
+            var xPosition = -20;
+
 
             var text = new Konva.Text({
                 x: xPosition,
-                y: (height / 2) - handleHeight/2,
+                y: (height / 2) - 5,
                 text: "",
-                fontSize: 10,
+                fontSize: 11,
                 fontFamily: 'sans-serif',
                 fill: "#000",
                 align: "center"
             });
-            if(labelText) {
+
+            if (labelText) {
                 var label = new Konva.Text({
                     x: -handleWidth / 2,
                     y: (height / 2) - 5,
@@ -267,7 +269,7 @@ define(['konva'], function (Konva) {
             }
             group.add(line);
             group.add(text);
-            if(labelText) {
+            if (labelText) {
                 group.add(label);
             }
 
