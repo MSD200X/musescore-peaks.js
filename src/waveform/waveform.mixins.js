@@ -211,7 +211,7 @@ define(['konva'], function (Konva) {
                 align: "center"
             });
 
-            if (labelText) {
+            if(labelText) {
                 var label = new Konva.Text({
                     x: -handleWidth / 2,
                     y: (height / 2) - 5,
@@ -269,7 +269,7 @@ define(['konva'], function (Konva) {
             }
             group.add(line);
             group.add(text);
-            if (labelText) {
+            if(labelText) {
                 group.add(label);
             }
 

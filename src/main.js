@@ -56,6 +56,7 @@ define('peaks', [
        * ```
        */
       dataUri:               null,
+      data: null,
       /**
        * Will be used as a `xhr.responseType` if `dataUri` is a string, and not an object.
        * Here for backward compatibility purpose only.
