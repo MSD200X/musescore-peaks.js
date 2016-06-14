@@ -203,7 +203,7 @@ define(['konva'], function (Konva) {
             if(labelText) {
                 var label = new Konva.Text({
                     x: -handleWidth / 2,
-                    y: (height / 2) - 5,
+                    y: (height / 2) - 6,
                     text: labelText,
                     fontSize: 13,
                     width: handleWidth,
