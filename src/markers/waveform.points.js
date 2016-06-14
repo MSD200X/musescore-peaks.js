@@ -69,8 +69,6 @@ define([
 
                 if (point.zoom.marker) {
                     point.zoom.marker.show().setX(startPixel - point.zoom.marker.getWidth());
-                    // Change Text
-                    point.zoom.marker.label.setText(mixins.niceTime(point.timestamp, false));
                 }
             }
             else {

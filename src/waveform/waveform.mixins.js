@@ -128,7 +128,6 @@ define(['konva'], function (Konva) {
                     text.hide();
                     point.view.pointLayer.draw();
                 });
-
                 group.add(handle);
             }
 
@@ -155,12 +154,11 @@ define(['konva'], function (Konva) {
          * @param  {Function} onDragEnd  Callback after drag completed
          * @return {Konva Object}        Konva group object of handle marker elements
          */
-        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd, labelText, color) {
+        return function (draggable, point, parent, onDrag, onDblClick, onDragEnd, labelText, color, onClick) {
             var handleHeight = 30;
             var handleTop = (height / 2);
             var handleWidth = 30;
             var handleX = -10; //Place in the middle of the marker
-
 
             // If no color is provided for the marker, fall back to the point's color
             if (color === undefined) {
@@ -181,14 +179,16 @@ define(['konva'], function (Konva) {
                 }
             });
 
-            if (onDblClick) {
-                group.on('dblclick', function (event) {
-                    if (typeof(onDblClick) === 'function') {
-                        onDblClick(parent);
-                    }
+            if (typeof(onDblClick) === 'function') {
+                group.on('dblclick dbltap', function (event) {
+                    onDblClick(parent);
                 });
             }
-
+            if (typeof(onClick) === 'function') {
+                group.on('click tap', function (event) {
+                    onClick(parent);
+                });
+            }
             if (onDragEnd) {
                 group.on('dragend', function (event) {
                     if (typeof(onDragEnd) === 'function') {
@@ -199,17 +199,6 @@ define(['konva'], function (Konva) {
 
             //Place text to the left of the mark
             var xPosition = -20;
-
-
-            var text = new Konva.Text({
-                x: xPosition,
-                y: (height / 2) - 5,
-                text: "",
-                fontSize: 11,
-                fontFamily: 'sans-serif',
-                fill: "#000",
-                align: "center"
-            });
 
             if(labelText) {
                 var label = new Konva.Text({
@@ -224,8 +213,6 @@ define(['konva'], function (Konva) {
                     align: "center"
                 });
             }
-            text.hide();
-            group.label = text;
 
             /*
              Handle
@@ -256,19 +243,17 @@ define(['konva'], function (Konva) {
 
                 group.on("mouseover", function (event) {
                     document.body.style.cursor = "pointer";
-                    text.show();
-                    text.setX(xPosition - text.getWidth()); //Position text to the left of the mark
                     point.view.pointLayer.draw();
                 });
+
                 group.on("mouseout", function (event) {
-                    document.body.style.cursor = "default";
-                    text.hide();
                     point.view.pointLayer.draw();
                 });
+
                 group.add(handle);
             }
+
             group.add(line);
-            group.add(text);
             if(labelText) {
                 group.add(label);
             }
