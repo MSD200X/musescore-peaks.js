@@ -175,7 +175,6 @@ define([
             that.width = width;
             that.data = newWaveformData;
             that.stage.setWidth(that.width);
-            that.updateZoomWaveform(that.frameOffset);
             that.peaks.emit("zoomview_resized");
         });
 
